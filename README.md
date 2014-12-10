@@ -3,7 +3,7 @@ react-scroll-lock
 
 Scroll lock mixin for React components
 
-== Usage ==
+### Usage
 
 Simply add mixin in component, witch be lock inner scroll.
 
