@@ -1,0 +1,39 @@
+{
+  "name": "react-scroll-lock",
+  "version": "0.1.0",
+  "description": "Scroll lock mixin for React components",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "files": [
+    "src/*",
+    "index.js",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Laiff/react-scroll-lock.git"
+  },
+  "keywords": [
+    "mixin",
+    "react",
+    "react-component",
+    "scroll"
+  ],
+  "author": "Andrew Laiff <q.laiff@gmail.com> (https://github.com/Laiff)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Laiff/react-scroll-lock/issues"
+  },
+  "dependencies": {
+  },
+  "peerDependencies" : {
+    "react": ">= 0.11.2"
+  },
+  "engines": {
+    "node" : "*"
+  }
+}
