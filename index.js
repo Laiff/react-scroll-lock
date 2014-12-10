@@ -1,1 +1,1 @@
-module.exports = require('./src/LensedStateMixin');
+module.exports = require('./src/ScrollLock');
