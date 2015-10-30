@@ -2,6 +2,8 @@
  * Created by laiff on 10.12.14.
  */
 
+var React = require('react');
+
 /**
  * Prevent default behavior for event
  *
@@ -43,21 +45,21 @@ var ScrollLock = {
     },
 
     scrollLock: function () {
-        var elem = this.getDOMNode();
+        var elem = React.findDOMNode(this);
         if (elem) {
             addScrollEventListener(elem, this.onScrollHandler);
         }
     },
 
     scrollRelease: function () {
-        var elem = this.getDOMNode();
+        var elem = React.findDOMNode(this);
         if (elem) {
             removeScrollEventListener(elem, this.onScrollHandler);
         }
     },
 
     onScrollHandler: function (e) {
-        var elem = this.getDOMNode();
+        var elem = React.findDOMNode(this);
         var scrollTop = elem.scrollTop;
         var scrollHeight = elem.scrollHeight;
         var height = elem.clientHeight;
