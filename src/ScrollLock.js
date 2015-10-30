@@ -2,7 +2,7 @@
  * Created by laiff on 10.12.14.
  */
 
-var React = require('react');
+var ReactDOM = require('react-dom');
 
 /**
  * Prevent default behavior for event
@@ -45,21 +45,21 @@ var ScrollLock = {
     },
 
     scrollLock: function () {
-        var elem = React.findDOMNode(this);
+        var elem = ReactDOM.findDOMNode(this);
         if (elem) {
             addScrollEventListener(elem, this.onScrollHandler);
         }
     },
 
     scrollRelease: function () {
-        var elem = React.findDOMNode(this);
+        var elem = ReactDOM.findDOMNode(this);
         if (elem) {
             removeScrollEventListener(elem, this.onScrollHandler);
         }
     },
 
     onScrollHandler: function (e) {
-        var elem = React.findDOMNode(this);
+        var elem = ReactDOM.findDOMNode(this);
         var scrollTop = elem.scrollTop;
         var scrollHeight = elem.scrollHeight;
         var height = elem.clientHeight;
