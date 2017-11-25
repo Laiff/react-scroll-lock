@@ -1,8 +1,5 @@
-/**
- * Created by laiff on 10.12.14.
- */
-
-var ReactDOM = require('react-dom');
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * Prevent default behavior for event
@@ -10,71 +7,81 @@ var ReactDOM = require('react-dom');
  * @param e
  * @returns {boolean}
  */
-var cancelScrollEvent = function (e) {
-    e.stopImmediatePropagation();
-    e.preventDefault();
-    e.returnValue = false;
-    return false;
-};
+const cancelScrollEvent = (e) => {
+  e.stopImmediatePropagation()
+  e.preventDefault()
+  e.returnValue = false
+  return false
+}
 
-var addScrollEventListener = function (elem, handler) {
-    elem.addEventListener('wheel', handler, false);
-};
+const addScrollEventListener = (elem, handler) => {
+  elem.addEventListener('wheel', handler, false)
+}
 
-var removeScrollEventListener = function (elem, handler) {
-    elem.removeEventListener('wheel', handler, false);
-};
+const removeScrollEventListener = (elem, handler) => {
+  elem.removeEventListener('wheel', handler, false)
+}
 
-/**
- * @extends ReactCompositeComponentInterface
- *
- * @mixin ScrollLock
- */
-var ScrollLock = {
+class WithScrollLock extends PureComponent {
 
-    componentDidMount: function () {
-        this.scrollLock();
-    },
+  static propTypes = {
+    children: PropTypes.func.isRequired,
+  }
 
-    componentDidUpdate: function () {
-        this.scrollLock();
-    },
+  componentDidMount () {
+    this.scrollLock()
+  }
 
-    componentWillUnmount: function () {
-        this.scrollRelease();
-    },
+  componentDidUpdate () {
+    this.scrollLock()
+  }
 
-    scrollLock: function () {
-        var elem = ReactDOM.findDOMNode(this);
-        if (elem) {
-            addScrollEventListener(elem, this.onScrollHandler);
-        }
-    },
+  componentWillUnmount () {
+    this.scrollRelease()
+  }
 
-    scrollRelease: function () {
-        var elem = ReactDOM.findDOMNode(this);
-        if (elem) {
-            removeScrollEventListener(elem, this.onScrollHandler);
-        }
-    },
-
-    onScrollHandler: function (e) {
-        var elem = ReactDOM.findDOMNode(this);
-        var scrollTop = elem.scrollTop;
-        var scrollHeight = elem.scrollHeight;
-        var height = elem.clientHeight;
-        var wheelDelta = e.deltaY;
-        var isDeltaPositive = wheelDelta > 0;
-
-        if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
-            elem.scrollTop = scrollHeight;
-            return cancelScrollEvent(e);
-        }
-        else if (!isDeltaPositive && -wheelDelta > scrollTop) {
-            elem.scrollTop = 0;
-            return cancelScrollEvent(e);
-        }
+  scrollLock () {
+    const elem = this.element
+    if (elem) {
+      addScrollEventListener(elem, this.onScrollHandler)
     }
-};
+  }
 
-module.exports = ScrollLock;
+  scrollRelease () {
+    const elem = this.element
+    if (elem) {
+      removeScrollEventListener(elem, this.onScrollHandler)
+    }
+  }
+
+  onScrollHandler = (e) => {
+    const elem = this.element
+    const scrollTop = elem.scrollTop
+    const scrollHeight = elem.scrollHeight
+    const height = elem.clientHeight
+    let wheelDelta = e.deltaY
+    let isDeltaPositive = wheelDelta > 0
+
+    if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
+      elem.scrollTop = scrollHeight
+      return cancelScrollEvent(e)
+    }
+    else if (!isDeltaPositive && -wheelDelta > scrollTop) {
+      elem.scrollTop = 0
+      return cancelScrollEvent(e)
+    }
+  }
+
+  lockElem = (el) => this.element = el
+
+  render () {
+    const { children, ...rest } = this.props
+
+    return children({
+      lockElem: this.lockElem,
+      ...rest,
+    })
+  }
+}
+
+export default WithScrollLock
