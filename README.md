@@ -5,21 +5,21 @@ Scroll lock mixin for React components
 
 ### Usage
 
-Simply add mixin in component, witch be lock inner scroll.
+``` jsx
+import ScrollLock from 'react-scroll-lock'
 
-``` js
-var ScrollLock = require('react-scroll-lock');
+class NeedToLockScroll extends PureComponent {
 
-React.createClass({
-	mixins : [
-		ScrollLock
-	],
-
-	render : function() {
-		return (
-			<div> ... </div>
-		)
-	}
-})
-
+  render () {
+    return (
+      <ScrollLock someProp={this.props.someProp}>
+        {({ lockElem, someProp}) => (
+	  <div ref={lockElem}>
+	    {someProp}
+	  </div>
+        )}
+      </ScrollLock>
+    )
+  }
+}
 ```
